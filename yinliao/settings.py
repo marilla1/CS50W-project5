@@ -61,7 +61,7 @@ ROOT_URLCONF = 'yinliao.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'plantilla'),], #configuracion para the wagon
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),], #configuracion para the wagon
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -159,3 +159,5 @@ CLOUDINARY_STORAGE = {
 
 MEDIA_URL = '/media/'  
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+LOGIN_REDIRECT_URL = '/' #una vez el usuario se loguee se envie a una ruta
