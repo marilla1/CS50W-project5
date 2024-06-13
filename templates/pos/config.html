@@ -1,0 +1,109 @@
+{% extends 'pos/layout.html' %}
+ {% load static %}
+ {% block content %}
+
+ <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+   
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+     
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      {% block navbar %}
+        {% include "pos/nav.html" %}
+      {% endblock %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">Welcome {{ user }}</h3>
+                  <form id="configForm" enctype="multipart/form-data">
+                    <label for="name">systemname:</label>
+                    <input type="text" id="systemname" name="systemname" required><br><br>
+                    <label for="image">image:</label>
+                    <input type="file" id="image" name="image" accept="image/*"><br><br>
+                    <label for="address">address:</label>
+                    <input type="text" id="address" name="address"><br><br>
+                    <label for="phone">phone:</label>
+                    <input type="text" id="phone" name="phone"><br><br>
+                    <label for="exchange">exchange:</label>
+                    <input type="text" id="exchange" name="exchange"><br><br>
+                                  
+                    <button type="submit">Submit</button>
+                </form>
+                
+                
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <!-- partial -->
+      </div>
+
+      <script>
+        document.getElementById('configForm').addEventListener('submit', function (event) {
+          event.preventDefault();
+  
+          const formData = new FormData(event.target);
+          const data = {
+            systemname: formData.get('systemname'), // Cambiado el nombre del campo
+            Image: formData.get('image'),
+            address: formData.get('address'),
+            phone: formData.get('phone'),
+            exchange: formData.get('exchange'),
+          };
+  
+          fetch('/update_config/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken')  // Necesitas manejar CSRF Token
+            },
+            body: JSON.stringify(data)
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: data.message
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Error: ' + data.message
+                });
+                console.log(data.errors);
+              }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+  
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+  
+      </script>
+      
+{% endblock %}

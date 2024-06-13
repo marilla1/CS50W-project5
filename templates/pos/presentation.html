@@ -1,0 +1,107 @@
+{% extends 'pos/layout.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-scroller">
+  <!-- partial:partials/_navbar.html -->
+
+  <!-- partial -->
+  <div class="container-fluid page-body-wrapper">
+
+    <!-- partial -->
+    <!-- partial:partials/_sidebar.html -->
+    {% block navbar %}
+    {% include "pos/nav.html" %}
+    {% endblock %}
+    <!-- partial -->
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="row">
+          <div class="col-md-12 grid-margin">
+            <div class="row">
+              <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                <h3 class="font-weight-bold">Welcome {{ user }}</h3>
+                <form id="presentationForm">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" required><br><br>
+
+                  <label for="description">Description:</label>
+                  <textarea id="description" name="description"></textarea><br><br>
+
+                  <label for="status">Status:</label>
+                  <input type="checkbox" id="status" name="status" checked><br><br>
+
+                  <button type="submit">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:partials/_footer.html -->
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+<script>
+  document.getElementById('presentationForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = {
+      name: formData.get('name'),
+      description: formData.get('description'),
+      status: formData.get('status') === 'on'  // El checkbox se convierte a boolean
+    };
+
+    fetch('/create_presentation/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')  // Necesitas manejar CSRF Token
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: data.message
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error: ' + data.message
+          });
+          console.log(data.errors);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  });
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+</script>
+
+{% endblock %}

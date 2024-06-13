@@ -40,7 +40,7 @@ class Presentation(models.Model):
 
 class Category(models.Model):
     categoryname = models.CharField(max_length=50)
-
+    status = models.BooleanField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
