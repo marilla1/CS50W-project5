@@ -30597,11 +30597,17 @@ div.tagsinput span.tag a {
 /*MIS CLASES*/
 
 body{
-  background-color: #d1d0ff;
+  background-color: #b9b3a9;;
 }
 
 
 .formula{
   max-width: 50%; 
   margin-top: 1rem;
+}
+
+.etique{
+  margin-top: 1rem; 
+  font-weight: bold; 
+  font-size: large;
 }

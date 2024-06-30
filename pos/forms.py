@@ -21,3 +21,13 @@ class SettingsForm(forms.ModelForm):
     class Meta:
         model = Settings
         fields = ['systemname', 'image', 'address', 'phone', 'exchange']
+
+# class ProductForm(forms.ModelForm):
+#     class Meta:
+#         model = Product
+#         fields = ['size', 'productname', 'presentation', 'description', 'status']
+
+# class SaleForm(forms.ModelForm):
+#     class Meta:
+#         model = Sale
+#         fields = ['customer_name', 'sub_total', 'total', 'discount', 'user', 'money_r', 'money_change', 'code', 'status']

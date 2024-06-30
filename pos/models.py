@@ -92,8 +92,8 @@ def codeasign(sender, instance, **kwargs):
 class Sale(models.Model):
     customer_name = models.CharField(max_length=50, null=True)
     sub_total = models.DecimalField(max_digits=10, decimal_places=2)
-    Total = models.DecimalField(max_digits=10, decimal_places=2)
-    Discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     money_r= models.DecimalField(max_digits=10, decimal_places=2)
     money_change= models.DecimalField(max_digits=10, decimal_places=2)

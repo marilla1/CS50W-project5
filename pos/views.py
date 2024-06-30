@@ -17,6 +17,7 @@ def index(request):
 
     return render(request,"pos/index.html", context)
 
+
 @csrf_exempt
 @require_POST
 def create_presentation(request):
@@ -51,6 +52,7 @@ def create_presentation(request):
 
 def view_presentation(request):
     return render(request, "pos/presentation.html")
+
 
 @csrf_exempt
 @require_POST
@@ -120,9 +122,9 @@ def createsize(request):
     return JsonResponse(response_data)
 
 def view_size(request):
-
     return render(request,"pos/size.html")
     
+
 def config(request):
     return render(request, "pos/config.html")
 
@@ -158,6 +160,11 @@ def setting_update(request):
     
     return JsonResponse(response_data)
 
-def view_categories(request):
 
-    return render(request,"pos/categories.html")
+
+def product(request):
+    return render(request,"pos/products.html")
+
+def sale(request):
+    return render(request,"pos/sales.html")
+    

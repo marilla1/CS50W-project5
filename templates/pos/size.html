@@ -15,17 +15,17 @@
       {% endblock %}
       <!-- partial -->
 
-    <div class="main-panel card" style="background-color: #feffe9">
+    <div class="main-panel card" style="background-color:#b9b3a9">
       <form action="{% url 'size' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
           <h1 class="d-flex justify-content-center" style="margin-top: 3rem;">Set up Sizes</h1>
 
-          <div class="form-group container" style="max-width: 50%; margin-top: 1rem;" >
+          <div class="form-group container formula" >
             <label for="size" style="margin-top: 1rem; font-weight: bold; font-size: large;">Size:</label>
             <input type="text" id="size" name="size" required style="margin-top: 1rem;" class="form-control"> 
           </div>
 
-          <div class="form-group container" style="max-width: 50%; margin-top: 1rem;">
+          <div class="form-group container formula">
             <label for="status" style="margin-top: 1rem; font-weight: bold; font-size: large;">Status:</label>
             <input type="checkbox" id="status" name="status" checked style="margin-top: 1rem;" class="form-control">
           </div>

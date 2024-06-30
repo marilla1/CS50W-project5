@@ -39,19 +39,19 @@
       </a>
       <div class="collapse" id="categories">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="{% url 'categories'%}">View Categories</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'categories'%}">Add Categories</a></li>
         </ul>
       </div>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#products" aria-expanded="false" aria-controls="products">
+      <a class="nav-link" data-toggle="collapse" href="#product" aria-expanded="false" aria-controls="product">
         <span class="menu-title">Products</span>
         <i class="menu-arrow"></i>
       </a>
-      <div class="collapse" id="products">
+      <div class="collapse" id="product">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="#products">View Products</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{% url 'product'%}">Add Products</a></li>
         </ul>
       </div>
     </li>
@@ -63,7 +63,7 @@
       </a>
       <div class="collapse" id="sales">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="">View Sales</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{% url 'sale'%}">View Sales</a></li>
         </ul>
       </div>
     </li>

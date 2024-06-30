@@ -12,4 +12,6 @@ urlpatterns = [
     path('createsize/', views.createsize, name='createsize'),
     path('config/', views.config, name='config'),
     path('update_config/', views.setting_update, name='update_config'),
+    path('product/', views.product, name='product'),
+    path('sale/', views.sale, name='sale'),
 ]
