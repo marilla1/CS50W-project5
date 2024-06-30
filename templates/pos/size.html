@@ -14,29 +14,28 @@
         {% include "pos/nav.html" %}
       {% endblock %}
       <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row">
-            <div class="col-md-12 grid-margin">
-              <div class="row">
-                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                  <h3 class="font-weight-bold">Welcome {{ user }}</h3>
-                  <form id="sizeForm">
-                    <label for="name">Size:</label>
-                    <input type="text" id="size" name="size" required><br><br>
-                  
-                    <label for="status">Status:</label>
-                    <input type="checkbox" id="status" name="status" checked><br><br>
-                  
-                    <button type="submit">Submit</button>
-                </form>
-                
-                </div>
-              </div>
-            </div>
+
+    <div class="main-panel card" style="background-color: #feffe9">
+      <form action="{% url 'size' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+          <h1 class="d-flex justify-content-center" style="margin-top: 3rem;">Set up Sizes</h1>
+
+          <div class="form-group container" style="max-width: 50%; margin-top: 1rem;" >
+            <label for="size" style="margin-top: 1rem; font-weight: bold; font-size: large;">Size:</label>
+            <input type="text" id="size" name="size" required style="margin-top: 1rem;" class="form-control"> 
           </div>
-  
-        </div>
+
+          <div class="form-group container" style="max-width: 50%; margin-top: 1rem;">
+            <label for="status" style="margin-top: 1rem; font-weight: bold; font-size: large;">Status:</label>
+            <input type="checkbox" id="status" name="status" checked style="margin-top: 1rem;" class="form-control">
+          </div>
+
+          <div class="d-flex justify-content-center" style="margin-top: 3rem;">
+            <input type="submit" class="btn btn-primary" value="Submit">
+          </div>
+      </form>
+    </div>
+
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <!-- partial -->

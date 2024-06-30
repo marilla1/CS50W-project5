@@ -13,37 +13,34 @@
     {% block navbar %}
     {% include "pos/nav.html" %}
     {% endblock %}
-    <!-- partial -->
-    <div class="main-panel">
-      <div class="content-wrapper">
-        <div class="row">
-          <div class="col-md-12 grid-margin">
-            <div class="row">
-              <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                <h3 class="font-weight-bold">Welcome {{ user }}</h3>
-                <form id="presentationForm">
-                  <label for="name">Name:</label>
-                  <input type="text" id="name" name="name" required><br><br>
+     
+    <div class="main-panel card" style="background-color: #feffe9">
+      <form action="{% url 'presentation' %}" method="post" enctype="multipart/form-data" class="container">
+        {% csrf_token %}
+          <h1 class="d-flex justify-content-center" style="margin-top: 3rem;">Welcome {{ user }}</h1>
 
-                  <label for="description">Description:</label>
-                  <textarea id="description" name="description"></textarea><br><br>
-
-                  <label for="status">Status:</label>
-                  <input type="checkbox" id="status" name="status" checked><br><br>
-
-                  <button type="submit">Submit</button>
-                </form>
-              </div>
-            </div>
+          <div class="form-group container formula">
+            <label for="name" style="margin-top: 1rem; font-weight: bold; font-size: large;">Name:</label>
+            <input type="text" id="name" name="name" required style="margin-top: 1rem;" class="form-control"> 
           </div>
-        </div>
 
-      </div>
-      <!-- content-wrapper ends -->
-      <!-- partial:partials/_footer.html -->
-      <!-- partial -->
+          <div class="form-group container formula">
+            <label for="description" style="font-weight: bold; font-size: large;">Description:</label>
+            <textarea id="description" name="description" style="margin-top: 1rem;" class="form-control" required></textarea> 
+          </div>
+
+          <div class="form-group container formula">
+            <label for="status" style="font-weight: bold; font-size: large;" >Status:</label>
+            <input type="checkbox" id="status" name="status" checked style="margin-top: 1rem;" class="form-control">
+          </div>
+
+          <div class="d-flex justify-content-center" style="margin-top: 3rem;">
+            <input type="submit" class="btn btn-primary" value="Submit">
+          </div>
+
+      </form>
     </div>
-    <!-- main-panel ends -->
+
   </div>
   <!-- page-body-wrapper ends -->
 </div>

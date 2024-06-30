@@ -90,10 +90,10 @@ WSGI_APPLICATION = 'yinliao.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'yinliaobubbletea',
-        'USER': 'yinliaobubbletea_user',
-        'PASSWORD': '8WvGUWGrJb1eBTuGzgLyEY6uumPw6xeq',
-        'HOST': 'dpg-cp9qkf4f7o1s73a5fol0-a.ohio-postgres.render.com',
+        'NAME': 'yinliao_bubbletea',
+        'USER': 'marilla1',
+        'PASSWORD': 'Z7BA6d9uNSb1i6Rzs8DriGG35k4Ggpff',
+        'HOST': 'dpg-cq081m2ju9rs73apqg5g-a.oregon-postgres.render.com',
         'PORT': '5432',  # Puerto por defecto de PostgreSQL
     }
 }
@@ -135,6 +135,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'templates', 'pos', 'static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

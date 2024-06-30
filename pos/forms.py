@@ -5,6 +5,7 @@ class PresentationForm(forms.ModelForm):
     class Meta:
         model = Presentation
         fields = ['name', 'description', 'status']
+        #widgets = {"title": forms.TextInput(attrs={"class": "form-control inputs"}), "description": forms.Textarea(attrs={"class": "form-control inputs"}),"image": forms.FileInput(attrs={"class": "form-control-field inputs"}) }
 
 class CategoryForm(forms.ModelForm):
     class Meta:

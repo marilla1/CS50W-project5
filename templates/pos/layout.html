@@ -8,22 +8,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Yinliao</title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="https://themewagon.github.io/skydash/vendors/feather/feather.css">
-  <link rel="stylesheet" href="https://themewagon.github.io/skydash/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="https://themewagon.github.io/skydash/vendors/css/vendor.bundle.base.css">
+   {% load static %}
+  <!-- <link rel="stylesheet" href="https://themewagon.github.io/skydash/vendors/feather/feather.css"> {% static 'feather.css' %} -->
+  <link rel="stylesheet" href="{% static 'feather.css' %}"> 
+
+  <!-- <link rel="stylesheet" href="https://themewagon.github.io/skydash/vendors/ti-icons/css/themify-icons.css"> {% static 'themify-icon.css' %} -->
+  <link rel="stylesheet" href="{% static 'themify-icons.css' %}"> 
+
+  <!-- <link rel="stylesheet" href="https://themewagon.github.io/skydash/vendors/css/vendor.bundle.base.css"> -->
+  <link rel="stylesheet" href="{% static 'vendor.bundle.base.css' %}"> 
+
   <!-- endinject -->
   <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="https://themewagon.github.io/skydash/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+
+  <!-- <link rel="stylesheet" href="https://themewagon.github.io/skydash/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> -->
+  <link rel="stylesheet" href="{% static 'dataTables.bootstrap4.css' %}"> 
+
+
   <link rel="stylesheet" href="https://themewagon.github.io/skydash/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" type="text/css" href="https://themewagon.github.io/skydash/js/select.dataTables.min.css">
+  <!-- <link rel="stylesheet" href="{% static 'themify-icons.css' %}">  -->
+
+  <!-- <link rel="stylesheet" type="text/css" href="https://themewagon.github.io/skydash/js/select.dataTables.min.css"> -->
+  <link rel="stylesheet" href="{% static 'select.dataTables.min.css' %}"> 
+
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="https://themewagon.github.io/skydash/css/vertical-layout-light/style.css">
+
+  <!-- <link rel="stylesheet" href="https://themewagon.github.io/skydash/css/vertical-layout-light/style.css"> -->
+  <link rel="stylesheet" href="{% static 'style.css' %}"> 
+
+  <!-- Index Style from CodePen -->
+  <!-- <link rel="stylesheet" href="{% static 'styleindex.css' %}">  -->
+
   <!-- endinject -->
   <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/850/850212.png" />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
 
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+  <script src="{% static 'sweetalert2@11' %}"></script>
 </head>
 <body>
 
