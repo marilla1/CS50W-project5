@@ -41,7 +41,9 @@
             <i class="fas fa-eye"></i>
           </a>
           <br>
-          <input readonly type="number" name="product" class="form-control" id="product" aria-describedby="Total" style="margin-top: 1rem;">
+          <select class="custom-select" id="product" aria-label="selectproduct" style="margin-top: 1rem;">
+            <option selected>Select an option</option>
+          </select>
         </div>
         
 
@@ -53,8 +55,7 @@
           <a class="mb-3" data-toggle="modal" data-target="#BuscaProductoModal">
             <i class="fas fa-eye"></i>
           </a>
-          <br>
-          <input readonly type="number" name="total" class="form-control" id="total" aria-describedby="Total" style="margin-top: 1rem;">
+          <input type="number" id="quantity" name="quantity" required style="margin-top: 1rem;" class="form-control"> 
         </div>
 
 

@@ -80,23 +80,23 @@ WSGI_APPLICATION = 'yinliao.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'yinliao_bubbletea',
-        'USER': 'marilla1',
-        'PASSWORD': 'Z7BA6d9uNSb1i6Rzs8DriGG35k4Ggpff',
-        'HOST': 'dpg-cq081m2ju9rs73apqg5g-a.oregon-postgres.render.com',
-        'PORT': '5432',  # Puerto por defecto de PostgreSQL
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'yinliao_bubbletea',
+#         'USER': 'marilla1',
+#         'PASSWORD': 'Z7BA6d9uNSb1i6Rzs8DriGG35k4Ggpff',
+#         'HOST': 'dpg-cq081m2ju9rs73apqg5g-a.oregon-postgres.render.com',
+#         'PORT': '5432',  # Puerto por defecto de PostgreSQL
+#     }
+# }
 
 
 
