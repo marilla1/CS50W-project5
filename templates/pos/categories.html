@@ -15,87 +15,87 @@
     {% endblock %}
     <!-- partial -->
 
-    
-    <div class="main-panel card" style="background-color: #b9b3a9">
+
+    <div class="main-panel card">
       <form action="{% url 'categories' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-          <h1 class="d-flex justify-content-center" style="margin-top: 3rem;">Set up Categories</h1>
+        <h1 class="text-center my-4">Set up Categories</h1>
 
-          <div class="form-group container formula">
-            <label for="name" style="margin-top: 1rem; font-weight: bold; font-size: large;">Name:</label>
-            <input type="text" id="size" name="name" required style="margin-top: 1rem;" class="form-control"> 
-          </div>
+        <div class="form-group container">
+          <label for="name" class="mt-3 fw-bold fs-5">Name:</label>
+          <input type="text" id="name" name="name" required class="form-control mt-1">
+        </div>
 
-          <div class="form-group formula">
-            <label for="status" style="margin-top: 1rem; font-weight: bold; font-size: large;">Status:</label>
-            <input type="checkbox" id="status" name="status" checked style="margin-top: 1rem;" class="form-control">
-          </div>
+        <div class="form-group container">
+          <label for="status" class="mt-3 fw-bold fs-5">Status:</label>
+          <input type="checkbox" id="status" name="status" checked class="form-check-input mt-1">
+        </div>
 
-          <div class="d-flex justify-content-center" style="margin-top: 3rem;">
-            <input type="submit" class="btn btn-primary" value="Submit">
-          </div>
+        <div class="d-flex justify-content-center mt-5">
+          <input type="submit" class="btn btn-primary" value="Submit">
+        </div>
       </form>
     </div>
 
-      </div>
-      <!-- content-wrapper ends -->
-      <!-- partial:partials/_footer.html -->
-      <!-- partial -->
-    </div>
+  </div>
+  <!-- content-wrapper ends -->
+  <!-- partial:partials/_footer.html -->
+  <!-- partial -->
+</div>
 
-    <script>
-      document.getElementById('categoryForm').addEventListener('submit', function (event) {
-        event.preventDefault();
+<script>
+  document.getElementById('categoryForm').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-        const formData = new FormData(event.target);
-        const data = {
-          categoryname: formData.get('categoryname'), // Cambiado el nombre del campo
-          status: formData.get('status') === 'on'  // El checkbox se convierte a boolean
-        };
+    const formData = new FormData(event.target);
+    const data = {
+      categoryname: formData.get('categoryname'), // Cambiado el nombre del campo
+      status: formData.get('status') === 'on'  // El checkbox se convierte a boolean
+    };
 
-        fetch('/createcategory/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')  // Necesitas manejar CSRF Token
-          },
-          body: JSON.stringify(data)
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: data.message
-              });
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Error: ' + data.message
-              });
-              console.log(data.errors);
-            }
-          })
-          .catch(error => console.error('Error:', error));
-      });
-
-      function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-          const cookies = document.cookie.split(';');
-          for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-            }
-          }
+    fetch('/createcategory/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')  // Necesitas manejar CSRF Token
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: data.message
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error: ' + data.message
+          });
+          console.log(data.errors);
         }
-        return cookieValue;
+      })
+      .catch(error => console.error('Error:', error));
+  });
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
       }
+    }
+    return cookieValue;
+  }
 
-    </script>
+</script>
 
-    {% endblock %}
+{% endblock %}

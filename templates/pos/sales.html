@@ -13,125 +13,110 @@
     {% include "pos/nav.html" %}
     {% endblock %}
 
-    <div class="main-panel card" style="background-color: white">
-      <form action="{% url 'sale' %}" method="post" enctype="multipart/form-data">
+    <div class="main-panel card">
+      <form action="{% url 'sale' %}" method="post" enctype="multipart/form-data" class="container">
+        {% csrf_token %}
+        <h1 class="text-center my-4 fw-bold">Sale</h1>
 
-        <h1 class="d-flex justify-content-center" style="margin-top: 3rem;">Sale</h1>
-
-
-        <div class="form-group container formula">
-          <label class="my-1 mr-2" style="margin-top: 1rem; font-weight: bold; font-size: large;" for="customer">Customer Name:</label>
-          <a class="mb-3" data-toggle="modal" data-target="#PModal">
+        <div class="mb-3 form-group">
+          <label for="Customer" class="form-label fw-bold fs-5">Customer Name:</label>
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
             <i class="fas fa-plus"></i>
           </a>
-          <a class="mb-3" data-toggle="modal" data-target="#BuscaProductoModal">
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
             <i class="fas fa-eye"></i>
           </a>
-          <br>
-          <input type="text" id="Customer" name="Customer" required style="margin-top: 1rem;" class="form-control"> 
+          <input type="text" id="Customer" name="Customer" required class="form-control mt-2">
         </div>
 
-
-        <div class="form-group container formula">
-          <label class="my-1 mr-2" style="margin-top: 1rem; font-weight: bold; font-size: large;" for="product">Product:</label>
-          <a class="mb-3" data-toggle="modal" data-target="#PModal">
+        <div class="mb-3 form-group">
+          <label for="product" class="form-label fw-bold fs-5">Product:</label>
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
             <i class="fas fa-plus"></i>
           </a>
-          <a class="mb-3" data-toggle="modal" data-target="#BuscaProductoModal">
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
             <i class="fas fa-eye"></i>
           </a>
-          <br>
-          <select class="custom-select" id="product" aria-label="selectproduct" style="margin-top: 1rem;">
+          <select class="form-select mt-2" id="product" aria-label="Select product">
             <option selected>Select an option</option>
           </select>
         </div>
-        
 
-        <div class="form-group container formula">
-          <label class="my-1 mr-2" style="margin-top: 1rem; font-weight: bold; font-size: large;" for="quantity">Quantity:</label>
-          <a class="mb-3" data-toggle="modal" data-target="#PModal">
+        <div class="mb-3 form-group">
+          <label for="quantity" class="form-label fw-bold fs-5">Quantity:</label>
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
             <i class="fas fa-plus"></i>
           </a>
-          <a class="mb-3" data-toggle="modal" data-target="#BuscaProductoModal">
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
             <i class="fas fa-eye"></i>
           </a>
-          <input type="number" id="quantity" name="quantity" required style="margin-top: 1rem;" class="form-control"> 
+          <input type="number" id="quantity" name="quantity" required class="form-control mt-2">
         </div>
 
-
-        <div class="form-group container formula">
-          <label class="my-1 mr-2" style="margin-top: 1rem; font-weight: bold; font-size: large;" for="sub_total">Sub_total:</label>
-          <a class="mb-3" data-toggle="modal" data-target="#PModal">
+        <div class="mb-3 form-group">
+          <label for="sub_total" class="form-label fw-bold fs-5">Sub_total:</label>
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
             <i class="fas fa-plus"></i>
           </a>
-          <a class="mb-3" data-toggle="modal" data-target="#BuscaProductoModal">
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
             <i class="fas fa-eye"></i>
           </a>
-          <br>
-          <input readonly type="number" class="form-control" id="sub_total" name="sub_total" aria-describedby="sub_total" style="margin-top: 1rem;">
+          <input readonly type="number" class="form-control mt-2" id="sub_total" name="sub_total"
+            aria-describedby="sub_total">
         </div>
 
-
-        <div class="mb-4 form-group container formula">
-          <label class="my-1 mr-2" style="margin-top: 1rem; font-weight: bold; font-size: large;" for="country">Discount:</label>
-          <a class="mb-3" data-toggle="modal" data-target="#labModal">
+        <div class="mb-3 form-group">
+          <label for="discount" class="form-label fw-bold fs-5">Discount:</label>
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#labModal">
             <i class="fas fa-plus"></i>
           </a>
-          <select class="custom-select" id="discount" aria-label="selectdiscount" style="margin-top: 1rem;">
+          <select class="form-select mt-2" id="discount" aria-label="Select discount">
             <option selected>Select an option</option>
           </select>
         </div>
-        
 
-        <div class="form-group container formula">
-          <label class="my-1 mr-2" style="margin-top: 1rem; font-weight: bold; font-size: large;" for="total">Total:</label>
-          <a class="mb-3" data-toggle="modal" data-target="#PModal">
+        <div class="mb-3 form-group">
+          <label for="total" class="form-label fw-bold fs-5">Total:</label>
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
             <i class="fas fa-plus"></i>
           </a>
-          <a class="mb-3" data-toggle="modal" data-target="#BuscaProductoModal">
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
             <i class="fas fa-eye"></i>
           </a>
-          <br>
-          <input readonly type="number" name="total" class="form-control" id="total" aria-describedby="Total" style="margin-top: 1rem;">
+          <input readonly type="number" name="total" class="form-control mt-2" id="total" aria-describedby="Total">
         </div>
 
-
-        <div class="form-group container formula">
-          <label class="my-1 mr-2" style="margin-top: 1rem; font-weight: bold; font-size: large;" for="money_r">Money Received:</label>
-          <a class="mb-3" data-toggle="modal" data-target="#PModal">
+        <div class="mb-3 form-group">
+          <label for="money_r" class="form-label fw-bold fs-5">Money Received:</label>
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
             <i class="fas fa-plus"></i>
           </a>
-          <a class="mb-3" data-toggle="modal" data-target="#BuscaProductoModal">
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
             <i class="fas fa-eye"></i>
           </a>
-          <br>
-          <input type="number" id="money_r" name="money_r" required style="margin-top: 1rem;" class="form-control"> 
+          <input type="number" id="money_r" name="money_r" required class="form-control mt-2">
         </div>
 
-
-        <div class="form-group container formula">
-          <label class="my-1 mr-2" style="margin-top: 1rem; font-weight: bold; font-size: large;" for="money_change">Money Change:</label>
-          <a class="mb-3" data-toggle="modal" data-target="#PModal">
+        <div class="mb-3 form-group">
+          <label for="money_change" class="form-label fw-bold fs-5">Money Change:</label>
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
             <i class="fas fa-plus"></i>
           </a>
-          <a class="mb-3" data-toggle="modal" data-target="#BuscaProductoModal">
+          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
             <i class="fas fa-eye"></i>
           </a>
-          <br>
-          <input readonly type="number" class="form-control" id="money_change" name="money_change" aria-describedby="money_change" style="margin-top: 1rem;">
+          <input readonly type="number" class="form-control mt-2" id="money_change" name="money_change"
+            aria-describedby="money_change">
         </div>
 
-
-        <div class="d-flex justify-content-center" style="margin-top: 3rem; margin-bottom: 3rem; ">
-          <button id="almacenar_compra" class="btn btn-primary" type="button">Add
-            sale</button>
+        <div class="d-flex justify-content-center my-5">
+          <button id="almacenar_compra" class="btn btn-primary" type="button">Add sale</button>
         </div>
-
       </form>
 
       <hr>
 
-      <div class=" mt-5">
+      <div class="mt-5">
         <table class="table">
           <thead>
             <tr>
@@ -182,17 +167,12 @@
           </tbody>
         </table>
       </div>
-
     </div>
 
+
+
   </div>
-
-
-</div>
-
-
-</div>
-<!-- page-body-wrapper ends -->
+  <!-- page-body-wrapper ends -->
 </div>
 <!-- container-scroller -->
 {% endblock %}
