@@ -1,19 +1,13 @@
 {% extends 'pos/layout.html' %}
 {% load static %}
 {% block content %}
-<div class="container-scroller">
-  <!-- partial:partials/_navbar.html -->
 
-  <!-- partial -->
-  <div class="container-fluid page-body-wrapper">
+<!-- partial -->
+{% block navbar %}
+{% include "pos/nav.html" %}
+{% endblock %}
 
-    <!-- partial -->
-    <!-- partial:partials/_sidebar.html -->
-    {% block navbar %}
-    {% include "pos/nav.html" %}
-    {% endblock %}
-
-    <div class="main-panel card">
+    <div class="content">
       <form action="{% url 'sale' %}" method="post" enctype="multipart/form-data" class="container">
         {% csrf_token %}
         <h1 class="text-center my-4 fw-bold">Sale</h1>
@@ -170,9 +164,4 @@
     </div>
 
 
-
-  </div>
-  <!-- page-body-wrapper ends -->
-</div>
-<!-- container-scroller -->
 {% endblock %}

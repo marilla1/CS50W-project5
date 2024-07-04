@@ -51,7 +51,11 @@ def create_presentation(request):
     return JsonResponse(response_data)
 
 def view_presentation(request):
-    return render(request, "pos/presentation.html")
+    presentation = Presentation.objects.all()
+    context = {
+        'data': presentation,
+    }
+    return render(request, "pos/presentation.html", context)
 
 
 @csrf_exempt

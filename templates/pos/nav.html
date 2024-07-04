@@ -31,14 +31,14 @@
             </li>
             <li class="nav-item  ">
                 <a href="{% url 'presentation' %}" class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-hand-holding-usd"></span></span>
+                    <span class="sidebar-icon"><span class="far fa-file-alt"></span></span>
                     <span>Presentation</span>
                 </a>
             </li>
 
             <li class="nav-item  ">
                 <a href="{% url 'categories' %}" class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-cog"></span></span>
+                    <span class="sidebar-icon"><span class="fas fa-box-open"></span></span>
                     <span>Categories</span>
                 </a>
             </li>
@@ -67,7 +67,7 @@
 
             <li class="nav-item  ">
                 <a href="{% url 'sale' %}" class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-cog"></span></span>
+                    <span class="sidebar-icon"><span class="fas fa-hand-holding-usd"></span></span>
                     <span>Sale</span>
                 </a>
             </li>
@@ -80,14 +80,15 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="">
-                    <form method="post" action="/accounts/logout/">
-                        <span class="sidebar-icon"><span class="fas fa-sign-out-alt text-danger"></span></span>
-                        {% csrf_token %}
-                        <input type="hidden" class="nav-link">Log Out</input>
-                    </form>
+                <form id="logout-form" method="post" action="{% url 'account_logout' %}" style="display: none;">
+                    {% csrf_token %}
+                </form>
+                <a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit();">
+                    <span class="sidebar-icon"><span class="fas fa-sign-out-alt text-danger"></span></span>
+                    Log Out
                 </a>
             </li>
+            
 
             <li role="separator" class="dropdown-divider mt-4 mb-3 border-black"></li>
             <li class="nav-item">
