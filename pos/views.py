@@ -74,7 +74,7 @@ def createcategory(request):
             'message': 'Category created successfully!',
             'category': {
                 'id': category.id,
-                'categoryname': category.categoryname, # Cambiado el nombre del atributo
+                'categoryname': category.categoryname,
                 'status': category.status,
                 'created_at': category.created_at,
                 'updated_at': category.updated_at,
@@ -90,8 +90,8 @@ def createcategory(request):
     return JsonResponse(response_data)
 
 def view_categories(request):
-
-    return render(request,"pos/categories.html")
+    categories = Category.objects.all()
+    return render(request, "pos/categories.html", {'data': categories})
 
 
 @csrf_exempt
@@ -108,9 +108,9 @@ def createsize(request):
         response_data = {
             'success': True,
             'message': 'Size created successfully!',
-            'presentation': {
+            'size': {  # Cambiado el nombre del campo a 'size'
                 'id': size.id,
-                'name': size.size,
+                'size': size.size,  # Cambiado el nombre del campo a 'size'
                 'status': size.status,
                 'created_at': size.created_at,
                 'updated_at': size.updated_at,
@@ -126,19 +126,14 @@ def createsize(request):
     return JsonResponse(response_data)
 
 def view_size(request):
-    return render(request,"pos/size.html")
-    
+    sizes = Size.objects.all()
+    return render(request, "pos/size.html", {'data': sizes})
 
-def config(request):
-    return render(request, "pos/config.html")
 
 @csrf_exempt
 @require_POST
-def setting_update(request):
-    body_unicode = request.body.decode('utf-8')
-    body_data = json.loads(body_unicode)
-    form = SettingsForm(body_data, request.FILES)
-
+def update_config(request):
+    form = SettingsForm(request.POST, request.FILES)
     if form.is_valid():
         settings = form.save()
         response_data = {
@@ -146,7 +141,7 @@ def setting_update(request):
             'message': 'Settings updated successfully!',
             'settings': {
                 'id': settings.id,
-                'systemname': settings.systemname, 
+                'systemname': settings.systemname,
                 'image_url': settings.image.url,
                 'address': settings.address,
                 'phone': settings.phone,
@@ -161,10 +156,12 @@ def setting_update(request):
             'message': 'Form is not valid',
             'errors': form.errors,
         }
-    
+
     return JsonResponse(response_data)
 
-
+def config(request):
+    data = Settings.objects.all()
+    return render(request, "pos/config.html", {'data': data})
 
 def product(request):
     return render(request,"pos/products.html")

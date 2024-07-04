@@ -8,80 +8,112 @@
 <!-- partial -->
 
 <div class="content">
-  <form action="{% url 'size' %}" method="post" enctype="multipart/form-data">
+  <form id="sizeForm" action="{% url 'createsize' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <h1 class="text-center my-4">Set up Sizes</h1>
 
     <div class="form-group container">
-      <label for="size" class="mt-3 fw-bold fs-5">Size:</label>
-      <input type="text" id="size" name="size" required class="form-control mt-1">
+        <label for="size" class="mt-3 fw-bold fs-5">Size:</label>
+        <input type="text" id="size" name="size" required class="form-control mt-1 mb-3">
     </div>
 
-    <div class="form-group container">
-      <label for="status" class="mt-3 fw-bold fs-5">Status:</label>
-      <input type="checkbox" id="status" name="status" checked class="form-check-input mt-1">
+    <div class="form-group container mt-4">
+        <label for="status" class="fw-bold fs-5">Status:</label>
+        <input type="checkbox" id="status" name="status" checked class="form-check-input mt-1 ms-3">
     </div>
 
-    <div class="d-flex justify-content-center mt-5">
-      <input type="submit" class="btn btn-primary" value="Submit">
+    <div class="d-flex justify-content-center mt-3 mb-6">
+        <input type="submit" class="btn btn-primary" value="Submit">
     </div>
-  </form>
+</form>
+
+<div class="card border-light shadow-sm mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0 rounded">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="border-0">#</th>
+                        <th class="border-0">Size</th>
+                        <th class="border-0">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Item -->
+                    {% for i in data %}
+                    <tr>
+                        <td class="border-0"><a href="#" class="text-primary font-weight-bold">{{ i.id }}</a> </td>
+                        <td class="border-0">{{ i.size }}</td>
+                        <td class="border-0">{{ i.status }}</td>
+                    </tr>
+                    {% endfor %}
+                    <!-- End of Item -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 </div>
 
 <!-- partial -->
 
 <script>
-  document.getElementById('sizeForm').addEventListener('submit', function (event) {
+  
+ document.getElementById('sizeForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const data = {
-      size: formData.get('size'), // Cambiado el nombre del campo
-      status: formData.get('status') === 'on'  // El checkbox se convierte a boolean
+        size: formData.get('size'), // Asegúrate de que el nombre del campo es 'size'
+        status: formData.get('status') === 'on'  // El checkbox se convierte a boolean
     };
 
     fetch('/createsize/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken')  // Necesitas manejar CSRF Token
-      },
-      body: JSON.stringify(data)
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')  // Necesitas manejar CSRF Token
+        },
+        body: JSON.stringify(data)
     })
-      .then(response => response.json())
-      .then(data => {
+    .then(response => response.json())
+    .then(data => {
         if (data.success) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: data.message
-          });
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: data.message
+            }).then(() => {
+                // Recargar la página después de cerrar el SweetAlert
+                location.reload();
+            });
         } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Error: ' + data.message
-          });
-          console.log(data.errors);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error: ' + data.message
+            });
+            console.log(data.errors);
         }
-      })
-      .catch(error => console.error('Error:', error));
-  });
+    })
+    .catch(error => console.error('Error:', error));
+});
 
-  function getCookie(name) {
+function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
         }
-      }
     }
     return cookieValue;
-  }
+}
 
 </script>
 
