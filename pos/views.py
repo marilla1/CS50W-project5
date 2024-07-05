@@ -164,7 +164,14 @@ def config(request):
     return render(request, "pos/config.html", {'data': data})
 
 def product(request):
-    return render(request,"pos/products.html")
+    presentation = Presentation.objects.all()
+    size = Size.objects.all()
+    context = {
+        'presentation': presentation,
+        'size': size,
+    }
+
+    return render(request,"pos/products.html", context)
 
 def sale(request):
     return render(request,"pos/sales.html")
