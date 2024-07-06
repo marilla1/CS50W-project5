@@ -13,5 +13,9 @@ urlpatterns = [
     path('config/', views.config, name='config'),
     path('update_config/', views.update_config, name='update_config'),
     path('product/', views.product, name='product'),
+    path("product_detail/<int:id>", views.productDescription, name="productDescription"),
     path('sale/', views.sale, name='sale'),
+    path('printInvoiceSale/<int:id>', views.printInvoiceSale, name='printInvoiceSale'),
+    path('api/', views.api, name='api'),
+    path('users/', views.create_user, name='users'),
 ]

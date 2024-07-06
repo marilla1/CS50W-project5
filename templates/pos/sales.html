@@ -11,103 +11,57 @@
       <form action="{% url 'sale' %}" method="post" enctype="multipart/form-data" class="container">
         {% csrf_token %}
         <h1 class="text-center my-4 fw-bold">Sale</h1>
-
+      
         <div class="mb-3 form-group">
           <label for="Customer" class="form-label fw-bold fs-5">Customer Name:</label>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
-            <i class="fas fa-plus"></i>
-          </a>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
-            <i class="fas fa-eye"></i>
-          </a>
           <input type="text" id="Customer" name="Customer" required class="form-control mt-2">
         </div>
-
+      
         <div class="mb-3 form-group">
           <label for="product" class="form-label fw-bold fs-5">Product:</label>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
-            <i class="fas fa-plus"></i>
-          </a>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
-            <i class="fas fa-eye"></i>
-          </a>
-          <select class="form-select mt-2" id="product" aria-label="Select product">
+          <select name="product" class="form-select mt-2" id="product" aria-label="Select product">
             <option selected>Select an option</option>
+            {% for p in product_data %}
+            <option value="{{ p.id }}">{{ p.productname }} - {{ p.size }} - ${{ p.price }}</option>
+            {% endfor %}
           </select>
+          
+          {% for p in product_data %}
+          <input type="hidden" value="{{ p.price }}" id="precio">
+          {% endfor %}
         </div>
-
+      
         <div class="mb-3 form-group">
           <label for="quantity" class="form-label fw-bold fs-5">Quantity:</label>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
-            <i class="fas fa-plus"></i>
-          </a>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
-            <i class="fas fa-eye"></i>
-          </a>
           <input type="number" id="quantity" name="quantity" required class="form-control mt-2">
         </div>
-
-        <div class="mb-3 form-group">
-          <label for="sub_total" class="form-label fw-bold fs-5">Sub_total:</label>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
-            <i class="fas fa-plus"></i>
-          </a>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
-            <i class="fas fa-eye"></i>
-          </a>
-          <input readonly type="number" class="form-control mt-2" id="sub_total" name="sub_total"
-            aria-describedby="sub_total">
-        </div>
-
+      
         <div class="mb-3 form-group">
           <label for="discount" class="form-label fw-bold fs-5">Discount:</label>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#labModal">
-            <i class="fas fa-plus"></i>
-          </a>
-          <select class="form-select mt-2" id="discount" aria-label="Select discount">
-            <option selected>Select an option</option>
+          <select name="discount" class="form-select mt-2" id="discount" aria-label="Select discount">
+            <option selected value="0">0 %</option>
+            <option value="5">5 %</option>
+            <option value="10">10 %</option>
+            <option value="15">15 %</option>
+            <option value="20">20 %</option>
           </select>
         </div>
-
-        <div class="mb-3 form-group">
-          <label for="total" class="form-label fw-bold fs-5">Total:</label>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
-            <i class="fas fa-plus"></i>
-          </a>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
-            <i class="fas fa-eye"></i>
-          </a>
-          <input readonly type="number" name="total" class="form-control mt-2" id="total" aria-describedby="Total">
-        </div>
-
+      
         <div class="mb-3 form-group">
           <label for="money_r" class="form-label fw-bold fs-5">Money Received:</label>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
-            <i class="fas fa-plus"></i>
-          </a>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
-            <i class="fas fa-eye"></i>
-          </a>
           <input type="number" id="money_r" name="money_r" required class="form-control mt-2">
         </div>
-
+      
         <div class="mb-3 form-group">
           <label for="money_change" class="form-label fw-bold fs-5">Money Change:</label>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#PModal">
-            <i class="fas fa-plus"></i>
-          </a>
-          <a class="ms-2" data-bs-toggle="modal" data-bs-target="#BuscaProductoModal">
-            <i class="fas fa-eye"></i>
-          </a>
-          <input readonly type="number" class="form-control mt-2" id="money_change" name="money_change"
-            aria-describedby="money_change">
+          <input type="number" class="form-control mt-2" id="money_change" name="money_change">
         </div>
-
+      
         <div class="d-flex justify-content-center my-5">
-          <button id="almacenar_compra" class="btn btn-primary" type="button">Add sale</button>
+          <button id="almacenar_compra" class="btn btn-primary" type="submit">Add sale</button>
         </div>
       </form>
-
+      
       <hr>
 
       <div class="mt-5">
@@ -116,48 +70,42 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Customer</th>
-              <th scope="col">Product</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Sub_total</th>
               <th scope="col">Discount</th>
-              <th scope="col">Total</th>
+              <!-- <th scope="col">Quantity</th> -->
+              <!-- <th scope="col">Sub_total</th> -->
+              <!-- <th scope="col">Discount</th>
+              <th scope="col">Total</th> -->
               <th scope="col">Money Received</th>
               <th scope="col">Money Change</th>
+              <th scope="col">Acction</th>
             </tr>
           </thead>
           <tbody>
+            {% for s in sale %}
             <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <th scope="row">{{ s.code }}</th>
+              <td>{{ s.customer_name }}</td>
+              <td>{{ s.discount }}</td>
+              <!-- <td>{{ s.discount }}</td> -->
+              <!-- <td>@mdo</td> -->
+              <td>{{ s.money_r }}</td>
+              <td>{{ s.money_change }}</td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="icon icon-sm">
+                          <span class="fas fa-ellipsis-h icon-dark"></span>
+                      </span>
+                      <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'printInvoiceSale' id=s.id %}" id="modalinvoice"><span class="fas fa-print mr-2"></span>Print invoice</a>
+                  </div>
+              </div>
+               
+              </td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
+            {% endfor %}
           </tbody>
         </table>
       </div>

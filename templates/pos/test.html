@@ -1,0 +1,756 @@
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card border-light shadow-sm components-section">
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="mb-4">
+                            <label class="my-1 mr-2" for="country">Laboratorio</label><a class="mb-3"
+                                data-toggle="modal" data-target="#labModal">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                            <select class="form-select" id="laboratorio" aria-label="Selecciona un laboratorio">
+                                <option selected>Selecciona un laboratorio</option>
+                            </select>
+                           
+                        </div>
+                        <hr>
+                        <label>Detalle del Producto</label>
+                        <div class="row">
+                            <div class="md-6" style="margin: 5px 0px 0px 0px;">
+                                <label class="my-1 mr-2" for="country">Producto</label>
+                                <a class="mb-3" data-toggle="modal" data-target="#PModal">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                                <a class="mb-3" data-toggle="modal" data-target="#BuscaProductoModal">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                </br>
+                                <select class="form-select w-100 js-example-basic-single" id="Detalleproductoid"
+                                    aria-label="Selecciona el producto">
+                                    <option selected>Selecciona un producto</option>
+                                    <!-- Otras opciones aquí -->
+                                </select>
+                                <!-- Producto Modal -->
+                              
+                                <!-- Producto Modal end -->
+
+                               
+                                <!-- Buscar producto modal end -->
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        fetch('/ModalesData/')
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                const tbody = document.getElementById('ProductosTablaModal');
+
+                                                tbody.innerHTML = '';
+
+                                                data.detalle_producto_tabla.forEach(detalle => {
+                                                    const tr = document.createElement('tr');
+
+                                                    const productoCell = document.createElement('td');
+                                                    productoCell.textContent = detalle.producto;
+                                                    productoCell.addEventListener('click', function () {
+                                                        actualizarSelect(detalle.id, detalle.producto);
+                                                    });
+                                                    tr.appendChild(productoCell);
+
+                                                    const farmacosCell = document.createElement('td');
+                                                    farmacosCell.textContent = detalle.farmacos;
+                                                    farmacosCell.addEventListener('click', function () {
+                                                        actualizarSelect(detalle.id, detalle.producto);
+                                                    });
+                                                    tr.appendChild(farmacosCell);
+
+                                                    const stockCell = document.createElement('td');
+                                                    stockCell.textContent = detalle.stock;
+                                                    stockCell.addEventListener('click', function () {
+                                                        actualizarSelect(detalle.id, detalle.producto);
+                                                    });
+                                                    tr.appendChild(stockCell);
+
+                                                    const compraCell = document.createElement('td');
+                                                    compraCell.textContent = detalle.precio_compra;
+                                                    compraCell.addEventListener('click', function () {
+                                                        actualizarSelect(detalle.id, detalle.producto);
+                                                    });
+                                                    tr.appendChild(compraCell);
+
+                                                    const ventaCell = document.createElement('td');
+                                                    ventaCell.textContent = detalle.precio_venta;
+                                                    ventaCell.addEventListener('click', function () {
+                                                        actualizarSelect(detalle.id, detalle.producto);
+                                                    });
+                                                    tr.appendChild(ventaCell);
+
+                                                    tbody.appendChild(tr);
+                                                });
+                                            })
+                                            .catch(error => console.error('Error al obtener los datos:', error));
+
+                                        function actualizarSelect(idDetalleProducto, nombreProducto) {
+                                            const selectProducto = document.getElementById('id_productoDetalle');
+                                            selectProducto.value = idDetalleProducto;
+                                            selectProducto.textContent = nombreProducto;
+                                        }
+                                    });
+                                </script>
+
+                               
+
+                        <div class="mb-4"style="margin: 10px 0px 0px 0px;">
+                            <label style="display: none;" class="my-1 mr-2" for="country">Detalle Fármaco</label><a class="mb-3"
+                                data-toggle="modal" data-target="#farModal">
+                                <i style="display: none;" class="fas fa-plus"></i>
+                            </a>
+                            <select style="display: none;" class="form-select js-example-basic-multiple" id="farmacoid" aria-label="Selecciona el detalle del farmaco">
+                                <option selected>Selecciona el detalle del fármaco</option>
+                            </select>
+                            
+                           
+                        </div>
+                     
+
+                                <script>
+                                    $(document).ready(function () {
+                                        $('.js-example-basic-single').select2();
+                                    });
+                                </script>
+                                
+
+                            </div>
+                            <div class="mb-4" style="margin: 18px 0px 0px 0px;">
+                                <label class="my-1 mr-2" for="email">Lote</label>
+                                <input type="text" class="form-control" id="loteid" aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-4" style="margin: 7px 0px 0px 0px;">
+                                <label class="my-1 mr-2" for="email">Precio de la compra por envases</label>
+                                <input oninput="validateInput(this)" type="number" class="form-control" id="precio_compra"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-4">
+                                <label class="my-1 mr-2" for="email">Costo Total</label>
+                                <input type="number" readonly class="form-control" id="costo_total"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-4 mt-2">
+                                <button id="almacenar_compra" class="btn btn-info float-left" type="button">Agregar
+                                    compra</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="mb-4">
+                            <label class="my-1 mr-2" for="country">Proveedor</label> <a class="mb-3" data-toggle="modal"
+                                data-target="#provModal">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                            <select class="form-select" id="proveedor" aria-label="Selecciona un proveedor">
+                                <option selected>Selecciona un proveedor</option>
+                            </select>
+                            
+                        </div>
+                        <hr>
+                        <div class="mb-4" style="margin: 55px 0px 0px 0px;">
+                            <label class="my-1 mr-2" for="country">Presentación</label>
+                            <a class="mb-3" data-toggle="modal" data-target="#preModal">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                            <select class="form-select" id="presentacionid" aria-label="Selecciona la presentacion">
+                                <option selected>Selecciona el tipo de presentación</option>
+                            </select>
+                            
+                        </div>
+                        <div class="mb-2 d-flex justify-content-between">
+
+                            <div class="d-flex flex-column mb-3">
+                                <label for="input2">Envases</label>
+                                <input oninput="validateInput(this)" type="number" class="form-control" id="Envases"
+                                    aria-describedby="emailHelp">
+                            </div>
+
+                            <div class="d-flex flex-column mb-3">
+                                <label for="input4">Unidades</label>
+                                <input oninput="validateInput(this)" type="number" class="form-control" id="Unidades"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-4" >
+                                <label class="my-1 mr-2" for="email">Total Unidad</label>
+                                <input readonly type="number" class="form-control" id="cantidad_total"
+                                    aria-describedby="emailHelp">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="my-1 mr-2" for="email">Precio de la venta por unidad</label>
+                            <input oninput="validateInput(this)" type="number" class="form-control" id="precio_venta"
+                                aria-describedby="emailHelp">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                    <hr style="margin: 99px 0px 0px 0px">
+                       
+                        <div class="mb-4" style="margin: 55px 0px 0px 0px;">
+                            <label class="my-1 mr-2" for="fecha_vencimiento">Fecha de vencimiento</label>
+                            <input readonly class="form-control" id="fecha_vencimiento" type="text"
+                                placeholder="dd/mm/yyyy" required>
+                        </div>
+                     
+                        <div class="mb-4">
+                            <label class="my-1 mr-2" for="email">Precio unitario</label>
+                            <input readonly type="number" class="form-control" id="precio_unitario"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-4" style="margin: 30px 0px 0px 0px;">
+                            <label class="my-1 mr-2" for="email">Sub Total</label>
+                            <input oninput="validateInput(this)" readonly type="number" class="form-control"
+                                id="Subtotal" aria-describedby="emailHelp">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let currentStep = 1;
+
+    function showStep(step) {
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'none';
+
+        if (step === 1) {
+            document.getElementById('step1').style.display = 'block';
+        } else if (step === 2) {
+            document.getElementById('step2').style.display = 'block';
+        }
+
+        currentStep = step;
+    }
+
+    function nextStep() {
+        currentStep++;
+        showStep(currentStep);
+    }
+
+    function prevStep() {
+        currentStep--;
+        showStep(currentStep);
+    }
+
+    document.getElementById('wizardForm').addEventListener('submit', function (event) {
+    });
+
+    window.onload = function () {
+        showStep(currentStep);
+    };
+</script>
+
+
+
+<script>
+    $(function () {
+        let fechaVencimientoInput = $("#fecha_vencimiento");
+
+        fechaVencimientoInput.on("click", function () {
+            if (!fechaVencimientoInput.hasClass("datepicker-popup")) {
+                fechaVencimientoInput.datepicker({
+                    dateFormat: "dd/mm/yy",
+                    minDate: 0,
+                    onSelect: function (selectedDate) {
+                        let currentDate = new Date();
+                        let selectedDateObj = new Date(selectedDate);
+
+                        if (selectedDateObj < currentDate) {
+                            alert("La fecha de vencimiento no puede ser anterior a la fecha actual. Por favor, selecciona una fecha válida.");
+                            fechaVencimientoInput.val("");
+                        }
+                    }
+                });
+                fechaVencimientoInput.addClass("datepicker-popup");
+            }
+            fechaVencimientoInput.datepicker("show");
+        });
+    });
+</script>
+
+
+
+
+
+
+
+<div class="card border-light shadow-sm mb-4">
+    <div class="card-body">
+        <div class="mb-3">
+            <h4 id="TituloProveedor">Proveedor:</h4>
+        </div>
+        <div class="mb-3">
+            <input style="display: none;" type="number" name="" value="" id="CostoTotalSuma">
+            <h5 id="TituloCostoTotal">Costo Total:</h5>
+        </div>
+        <div class="table-responsive">
+            <table id="miTabla" class="table table-centered table-nowrap mb-0 rounded">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="border-0">Laboratorio</th>
+                        <th class="border-0">Cantidad Total</th>
+                        <th class="border-0">Precio de la compra</th>
+                        <th class="border-0">Precio de la venta</th>
+                        <th class="border-0">Total</th>
+                        <th class="border-0">Presentación</th>
+                        <th class="border-0">Fecha de vencimiento</th>
+                        <th class="border-0">Lote</th>
+                        <th class="border-0">Precio Unitario</th>
+                        <th class="border-0">Producto</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla_body"></tbody>
+            </table>
+        </div>
+        </br>
+        <div class="text-right">
+            <button id="GuardarCompra" class="btn btn-primary">Guardar compra</button>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="input_proveedor" name="input_proveedor" value="">
+<input type="hidden" id="input_costo_total" name="input_costo_total" value="">
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let rows = [];
+
+        document.getElementById("almacenar_compra").addEventListener("click", function () {
+            if (!validateFields()) {
+                Swal.fire("Información", "Todos los campos son requeridos para la compra.", "info");
+                return;
+            }
+
+            document.getElementById("proveedor").disabled = true;
+
+            let dataForTable = {
+                laboratorio: {
+                    text: getSelectedText("laboratorio"),
+                    value: document.getElementById("laboratorio").value
+                },
+                cantidad_total: document.getElementById("cantidad_total").value,
+                precio_compra: document.getElementById("precio_compra").value,
+                precio_venta: document.getElementById("precio_venta").value,
+                total: document.getElementById("Subtotal").value,
+                presentacion: {
+                    text: getSelectedText("presentacionid"),
+                    value: document.getElementById("presentacionid").value
+                },
+                fecha_vencimiento: document.getElementById("fecha_vencimiento").value,
+                lote: document.getElementById("loteid").value,
+                precio_unitario: document.getElementById("precio_unitario").value,
+                producto: {
+                    text: getSelectedText("Detalleproductoid"),
+                    value: document.getElementById("Detalleproductoid").value
+                },
+            };
+
+            rows.push(dataForTable);
+
+            document.getElementById("tabla_body").innerHTML = "";
+
+            rows.forEach(function (row) {
+                let tableRow = document.createElement("tr");
+                for (let key in row) {
+                    let cell = document.createElement("td");
+
+                    if (typeof row[key] === "object" && row[key].text && row[key].value) {
+                        let textSpan = document.createElement("span");
+                        textSpan.textContent = row[key].text;
+                        cell.appendChild(textSpan);
+                        cell.setAttribute("value", row[key].value);  
+                    } else {
+                        cell.textContent = row[key];
+                        cell.setAttribute("value", row[key]);  
+                    }
+
+                    tableRow.appendChild(cell);
+                }
+                document.getElementById("tabla_body").appendChild(tableRow);
+            });
+        });
+
+        function addDeleteButton(row) {
+            let deleteButton = document.createElement("button");
+            deleteButton.textContent = "Eliminar";
+            deleteButton.classList.add("btn", "btn-danger", "btn-sm", "delete-row");
+            deleteButton.addEventListener("click", function () {
+                let rowIndex = Array.from(row.parentNode.children).indexOf(row);
+                rows.splice(rowIndex, 1);
+                row.remove();
+            });
+            let cell = document.createElement("td");
+            cell.appendChild(deleteButton);
+            row.appendChild(cell);
+        }
+        document.getElementById("tabla_body").addEventListener("DOMNodeInserted", function (event) {
+        if (event.target.tagName === "TR") {
+            let newRow = event.target;
+            addDeleteButton(newRow);
+        }
+    });
+
+        function validateFields() {
+            let fields = [
+                "laboratorio",
+                "cantidad_total",
+                "precio_compra",
+                "precio_venta",
+                "Subtotal",
+                "presentacionid",
+                "fecha_vencimiento",
+                "loteid",
+                "precio_unitario",
+                "Detalleproductoid",
+            ];
+
+            for (let field of fields) {
+                let element = document.getElementById(field);
+
+                if (!element || element.value.trim() === "") {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function getSelectedText(selectId) {
+            let selectElement = document.getElementById(selectId);
+
+            if (selectElement && selectElement.options) {
+                let selectedIndex = selectElement.selectedIndex;
+
+                if (selectedIndex !== -1 && selectElement.options[selectedIndex]) {
+                    return selectElement.options[selectedIndex].text;
+                }
+            }
+
+            return null;
+        }
+    });
+</script>
+
+<script>
+    function validateInput(input) {
+        let value = input.value;
+
+        value = value.replace(/[^0-9]/g, '');
+
+        let numValue = parseInt(value, 10);
+
+        if (isNaN(numValue) || numValue < 1 || numValue > 1000 || value.includes('e')) {
+            input.value = '';
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        calculateTotal();
+
+        document.getElementById("Envases").addEventListener("input", calculateTotal);
+        document.getElementById("Unidades").addEventListener("input", calculateTotal);
+    });
+
+    function calculateTotal() {
+        let envasesValue = document.getElementById("Envases").value;
+        let unidadesValue = document.getElementById("Unidades").value;
+
+        if (isNaN(envasesValue) || isNaN(unidadesValue)) {
+            Swal.fire({
+                title: "",
+                text: "Ingresa valores numéricos válidos",
+                icon: "info"
+            });
+            return;
+        }
+
+        let resultado = envasesValue * unidadesValue;
+        document.getElementById("cantidad_total").value = resultado;
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        calculateSubtotal();
+
+        document.getElementById("precio_compra").addEventListener("input", calculateSubtotal);
+        document.getElementById("Envases").addEventListener("input", calculateSubtotal);
+    });
+
+    function calculateSubtotal() {
+        var precioCompraValue = document.getElementById("precio_compra").value;
+        var envasesValue = document.getElementById("Envases").value;
+
+        if (isNaN(precioCompraValue) || isNaN(envasesValue)) {
+            Swal.fire({
+                title: "",
+                text: "Ingresa valores numéricos válidos",
+                icon: "info"
+            });
+            return;
+        }
+
+        var subtotal = precioCompraValue * envasesValue;
+        document.getElementById("Subtotal").value = subtotal;
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        calculateSubtotal();
+
+        document.getElementById("precio_compra").addEventListener("input", calculateSubtotal);
+        document.getElementById("Envases").addEventListener("input", calculateSubtotal);
+        document.getElementById("Unidades").addEventListener("input", calculatePrecioUnitario);
+    });
+
+    function calculateSubtotal() {
+        var precioCompraValue = document.getElementById("precio_compra").value;
+        var envasesValue = document.getElementById("Envases").value;
+
+        if (isNaN(precioCompraValue) || isNaN(envasesValue)) {
+            Swal.fire({
+                title: "",
+                text: "Ingresa valores numéricos válidos",
+                icon: "info"
+            });
+            return;
+        }
+
+        var subtotal = precioCompraValue * envasesValue;
+        document.getElementById("Subtotal").value = subtotal;
+
+        calculatePrecioUnitario();
+    }
+
+    function calculatePrecioUnitario() {
+        var subtotalValue = document.getElementById("precio_compra").value;
+        var unidadesValue = document.getElementById("cantidad_total").value;
+        var envasesValue = document.getElementById("Envases").value;
+
+        if (isNaN(subtotalValue) || isNaN(unidadesValue) || unidadesValue == 0) {
+            return;
+        }
+
+        var precioUnitario = subtotalValue * envasesValue / unidadesValue;
+        document.getElementById("precio_unitario").value = precioUnitario;
+    }
+</script>
+
+<script>
+    document.getElementById('almacenar_compra').addEventListener('click', function () {
+        var proveedorValue = document.getElementById('proveedor').value;
+        var costoTotalValue = document.getElementById('CostoTotalSuma').value;
+        var farmacoIdValue = document.getElementById('farmacoid').value;
+
+
+        var proveedorInput = document.getElementById('input_proveedor');
+        var costoTotalInput = document.getElementById('input_costo_total');
+
+        proveedorInput.value = proveedorValue;
+        costoTotalInput.value = costoTotalValue;
+
+        var compraActual = JSON.parse(localStorage.getItem('compra_actual')) || {};
+
+        compraActual = {
+            proveedor: proveedorValue,
+            costo_total: costoTotalValue,
+        };
+
+        localStorage.setItem('compra_actual', JSON.stringify(compraActual));
+
+        // console.log('Nuevo valor de costo total:', costoTotalValue);
+        // console.log('Compra actual:');
+        // console.log(compraActual);
+
+        var tablaBody = document.getElementById('tabla_body');
+
+        for (var i = 0; i < tablaBody.rows.length; i++) {
+            var fila = tablaBody.rows[i];
+            var detalleCompra = {
+                laboratorio: fila.cells[0].innerText,
+                cantidad_total: fila.cells[1].innerText,
+                precio_compra: fila.cells[2].innerText,
+                precio_venta: fila.cells[3].innerText,
+                total: fila.cells[4].innerText,
+                presentacion: fila.cells[5].innerText,
+                fecha_vencimiento: fila.cells[6].innerText,
+                lote: fila.cells[7].innerText,
+                precio_unitario: fila.cells[8].innerText,
+                producto: fila.cells[9].innerText
+            };
+
+            // console.log('Detalle de la compra ' + (i + 1) + ':');
+            // console.log(detalleCompra);
+        }
+    });
+</script>
+
+
+<script>
+    function validateInput() {
+        var subtotal = parseFloat(document.getElementById("Subtotal").value) || 0;
+
+        var iva = subtotal * 0.15;
+
+        var costoTotal = subtotal + iva;
+
+        document.getElementById("costo_total").value = costoTotal.toFixed(2);
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        var sumaCostoTotal = 0;
+
+        $("#almacenar_compra").click(function () {
+            var proveedorSeleccionadoElement = $("#proveedor option:selected");
+
+            var proveedorNombre = proveedorSeleccionadoElement.text();
+
+            var costoTotal = parseFloat($("#costo_total").val());
+
+            if (!isNaN(costoTotal)) {
+                sumaCostoTotal += costoTotal;
+
+                $("#CostoTotalSuma").attr("value", sumaCostoTotal);
+
+                $("#TituloProveedor").text("Proveedor: " + (proveedorNombre.trim() !== "" ? proveedorNombre : "No asignado"));
+                $("#TituloCostoTotal").text("Costo Total: " + (sumaCostoTotal !== 0 ? sumaCostoTotal.toFixed(2) : "No asignado"));
+            } 
+            // else {
+            //     alert("Por favor, ingresa un valor numérico válido para el costo total.");
+            // }
+            $("#precio_unitario").val("");
+            $("#fecha_vencimiento").val("");
+            $("#precio_compra").val("");
+            $("#precio_venta").val("");
+            $("#loteid").val("");
+            $("#Envases").val("");
+            $("#Unidades").val("");
+            $("#cantidad_total").val("");
+            $("#presentacionid").val("");
+            $("#Detalleproductoid").val(null).trigger('change');
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("GuardarCompra").addEventListener("click", function () {
+        var costoTotal = document.getElementById("CostoTotalSuma").value;
+        var proveedorSeleccionado = document.getElementById("proveedor").value;
+
+        var datosCompra = {
+            costoTotal: costoTotal,
+            proveedor: proveedorSeleccionado,
+            productos: []
+        };
+
+        var tabla = document.getElementById("miTabla");
+        var filas = tabla.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+        for (var i = 0; i < filas.length; i++) {
+            var celdas = filas[i].getElementsByTagName("td");
+            var producto = {
+                laboratorio: celdas[0].getAttribute("value"),  
+                cantidadTotal: celdas[1].innerText,
+                precioCompra: celdas[2].innerText,
+                precioVenta: celdas[3].innerText,
+                total: celdas[4].innerText,
+                presentacion: celdas[5].getAttribute("value"),  
+                fechaVencimiento: celdas[6].innerText,
+                lote: celdas[7].innerText,
+                precioUnitario: celdas[8].innerText,
+                DetalleProduto: celdas[9].getAttribute("value")  
+            };
+
+            datosCompra.productos.push(producto);
+        }
+
+        console.log(datosCompra)
+        fetch('/AlmacenarCompra/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': obtenerCSRFToken() 
+            },
+            body: JSON.stringify(datosCompra)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Compra guardada exitosamente"
+            });
+            setTimeout(function() {
+                location.reload();
+            }, 3000);
+        })
+        .catch((error) => {
+            console.error('Error al enviar la solicitud:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un error al guardar la compra',
+            });
+        });
+    });
+
+    function obtenerCSRFToken() {
+        var csrfToken = null;
+        document.cookie.split(";").forEach(function(cookie) {
+            if (cookie.trim().startsWith("csrftoken=")) {
+                csrfToken = cookie.split("=")[1];
+            }
+        });
+        return csrfToken;
+    }
+</script>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var precioCompraInput = document.getElementById("precio_compra");
+        var precioVentaInput = document.getElementById("precio_venta");
+
+        precioCompraInput.addEventListener("input", function () {
+            var precioCompra = parseFloat(precioCompraInput.value);
+
+            var precioVenta = precioCompra * 1.20;
+
+            precioVentaInput.value = isNaN(precioVenta) ? "" : precioVenta.toFixed(2);
+        });
+    });
+
+</script>
+

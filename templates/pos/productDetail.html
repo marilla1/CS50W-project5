@@ -1,0 +1,76 @@
+{% extends 'pos/layout.html' %}
+{% load static %}
+{% block content %}
+
+<!-- partial -->
+{% block navbar %}
+{% include "pos/nav.html" %}
+{% endblock %}
+
+<div class="content">
+  <form action="{% url 'productDescription' id=dato.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h1 class="text-center my-4">Add price to {{ dato.productname }}</h1>
+
+    <div class="form-group container">
+      <label class="mt-3 fw-bold fs-5" for="productdetailid">Price:</label>
+      <input name="price" placeholder="Type the price" type="number" class="form-control mt-2" id="producto" aria-describedby="emailHelp">
+    </div>
+
+    <div class="d-flex justify-content-center mt-5 mb-5">
+      <button id="almacenar_compra" class="btn btn-primary" type="submit">Add detail</button>
+    </div>
+  </form>
+
+  <hr>
+
+  <div class="mt-5">
+    <table class="table table-centered table-nowrap mb-0 rounded">
+      <thead class="thead-light">
+        <tr>
+          <th class="border-0">#</th>
+          <th class="border-0">Name</th>
+          <th class="border-0">Price</th>
+          <th class="border-0">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Item -->
+        {% for d in detail %}
+        <tr>
+          <td class="border-0"><a href="#" class="text-primary font-weight-bold">{{ d.code }}</a> </td>
+          <td class="border-0">
+            {{ d.product.productname }}
+          </td>
+          <td class="border-0">
+            {{ d.price }}
+          </td>
+          <td>
+            <div class="btn-group">
+                <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="icon icon-sm">
+                        <span class="fas fa-ellipsis-h icon-dark"></span>
+                    </span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'printInvoiceProduct' id=d.product.id %}" id="modalinvoice"><span class="fas fa-print mr-2"></span>Print invoice</a>
+                </div>
+            </div>
+        </td>
+        </tr>
+        {% endfor %}
+        <!-- End of Item -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+
+
+
+
+{% endblock %}
